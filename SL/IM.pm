@@ -1878,13 +1878,27 @@ sub import_generic {
             $sth->finish;
 
             my $query = qq|
-         INSERT INTO generic_import (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         INSERT INTO generic_import (
+            c1, c2, c3, c4, c5, c6, c7, c8, c9, c10,
+            c11, c12, c13, c14, c15, c16, c17, c18, c19, c20,
+            c21, c22, c23, c24, c25, c26, c27, c28, c29, c30,
+            c31, c32, c33, c34, c35, c36, c37, c38, c39, c40,
+            c41, c42, c43, c44, c45, c46, c47, c48, c49, c50)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       |;
             $form->{dbs}->query(
                 $query,          $newform->{c1},  $newform->{c2},  $newform->{c3},  $newform->{c4},  $newform->{c5},  $newform->{c6},
                 $newform->{c7},  $newform->{c8},  $newform->{c9},  $newform->{c10}, $newform->{c11}, $newform->{c12}, $newform->{c13},
-                $newform->{c14}, $newform->{c15}, $newform->{c16}, $newform->{c17}, $newform->{c18}, $newform->{c19}, $newform->{c20}
+                $newform->{c14}, $newform->{c15}, $newform->{c16}, $newform->{c17}, $newform->{c18}, $newform->{c19}, $newform->{c20},
+                $newform->{c21}, $newform->{c22}, $newform->{c23}, $newform->{c24}, $newform->{c25}, $newform->{c26}, $newform->{c27},
+                $newform->{c28}, $newform->{c29}, $newform->{c30}, $newform->{c31}, $newform->{c32}, $newform->{c33}, $newform->{c34},
+                $newform->{c35}, $newform->{c36}, $newform->{c37}, $newform->{c38}, $newform->{c39}, $newform->{c40}, $newform->{c41},
+                $newform->{c42}, $newform->{c43}, $newform->{c44}, $newform->{c45}, $newform->{c46}, $newform->{c47}, $newform->{c48},
+                $newform->{c49}, $newform->{c50}
             ) or error( $form->dberror );
         }
         $i++;

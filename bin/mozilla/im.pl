@@ -392,7 +392,37 @@ sub im_generic {
 	    c17 text,
 	    c18 text,
 	    c19 text,
-	    c20 text
+	    c20 text,
+	    c21 text,
+	    c22 text,
+	    c23 text,
+	    c24 text,
+	    c25 text,
+	    c26 text,
+	    c27 text,
+	    c28 text,
+	    c29 text,
+	    c30 text,
+	    c31 text,
+	    c32 text,
+	    c33 text,
+	    c34 text,
+	    c35 text,
+	    c36 text,
+	    c37 text,
+	    c38 text,
+	    c39 text,
+	    c40 text,
+	    c41 text,
+	    c42 text,
+	    c43 text,
+	    c44 text,
+	    c45 text,
+	    c46 text,
+	    c47 text,
+	    c48 text,
+	    c49 text,
+	    c50 text
   )' );
 
     $form->{dbs}->query('DELETE FROM report');
@@ -403,7 +433,13 @@ sub im_generic {
     $form->{callback} = "$form->{script}?action=import";
     for (qw(type login path)) { $form->{callback} .= "&$_=$form->{$_}" }
 
-    @columns = qw(c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 c12 c13 c14 c15 c16 c17 c18 c19 c20);
+    @columns = qw(
+        c1 c2 c3 c4 c5 c6 c7 c8 c9 c10
+        c11 c12 c13 c14 c15 c16 c17 c18 c19 c20
+        c21 c22 c23 c24 c25 c26 c27 c28 c29 c30
+        c31 c32 c33 c34 c35 c36 c37 c38 c39 c40
+        c41 c42 c43 c44 c45 c46 c47 c48 c49 c50
+    );
     $i       = 1;
     for (@columns) {
         $form->{ $form->{type} }{$_} = { field => $_, length => "", ndx => $i++ };
