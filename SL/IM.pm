@@ -1812,7 +1812,8 @@ sub prepare_import_data {
               VALUES ($reportid, ?, ?)|;
     my $rth = $dbh->prepare($query) || $form->dberror($query);
 
-    my $i = 0;
+    my $rowcount = 0;
+    my $i = $form->{skipheader} ? 1 : 0;
     my $j = 0;
 
     my @d = split /\n/, $form->{data};
@@ -1825,7 +1826,6 @@ sub prepare_import_data {
         @dl = &dataline($form);
 
         if ($#dl) {
-            $i++;
             for ( keys %{ $form->{ $form->{type} } } ) {
                 if ( defined $form->{ $form->{type} }->{$_}{ndx} ) {
 
@@ -1838,8 +1838,10 @@ sub prepare_import_data {
                     }
                 }
             }
+	    $i++;
+	    $rowcount++;
         }
-        $form->{rowcount} = $i;
+        $form->{rowcount} = $rowcount;
 
     }
     $dbh->disconnect;
