@@ -334,6 +334,10 @@ sub import {
 		<td align=left><input name=tabdelimited type=checkbox class=checkbox></td>
 	      </tr>
 	      <tr>
+		<th align=right colspan=2>| . $locale->text('Skip first line (header)') . qq|</th>
+		<td align=left><input name=skipheader type=checkbox class=checkbox checked></td>
+	      </tr>
+	      <tr>
 		<th align=right colspan=2>| . $locale->text('Handle quoted strings') . qq|</th>
 		<td align=left><input name=stringsquoted type=checkbox class=checkbox checked></td>
 	      </tr>
