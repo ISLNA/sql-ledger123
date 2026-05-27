@@ -334,10 +334,6 @@ sub import {
 		<td align=left><input name=tabdelimited type=checkbox class=checkbox></td>
 	      </tr>
 	      <tr>
-		<th align=right colspan=2>| . $locale->text('Skip first line (header)') . qq|</th>
-		<td align=left><input name=skipheader type=checkbox class=checkbox checked></td>
-	      </tr>
-	      <tr>
 		<th align=right colspan=2>| . $locale->text('Handle quoted strings') . qq|</th>
 		<td align=left><input name=stringsquoted type=checkbox class=checkbox checked></td>
 	      </tr>
@@ -346,8 +342,8 @@ sub import {
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('Mapfile') . qq|</th>
-	  <td><input name=mapfile type=radio class=radio value=1>&nbsp;| . $locale->text('Yes') . qq|&nbsp;
-	      <input name=mapfile type=radio class=radio value=0 checked>&nbsp;| . $locale->text('No') . qq|
+	  <td><label><input name=mapfile type=radio class=radio value=1        >&nbsp;| . $locale->text('Yes') . qq|</label>
+	      <label><input name=mapfile type=radio class=radio value=0 checked>&nbsp;| . $locale->text('No')  . qq|</label>
 	  </td>
 	</tr>
       </table>
