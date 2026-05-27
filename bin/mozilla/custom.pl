@@ -51,7 +51,7 @@ sub search_domus {
 
     my $table1 = $form->{dbs}->query(
         qq|
-        select c1 reference, c2 transdate, c3 accno, chart.description account_description, c6 project, project.description project_description, c7 source, c8 debit, c9 credit, c10 description
+        select c27 reference, c28 transdate, c29 accno, chart.description account_description, c32 project, project.description project_description, c33 source, c34 debit, c35 credit, c36 description
         from generic_import
         left join chart on (chart.accno = generic_import.c3)
         left join project on (project.projectnumber = generic_import.c6)
@@ -79,35 +79,35 @@ sub process_domus {
 
     use SL::GL;
     my $newform = new Form;
-    my @rows = $form->{dbs}->query('select id, c8, c9 from generic_import order by id')->hashes or die( $form->{dbs}->error );
+    my @rows = $form->{dbs}->query('select id, c34, c35 from generic_import order by id')->hashes or die( $form->{dbs}->error );
     for (@rows) {
         $form->{dbs}->query( '
-           update generic_import set c8 = ?, c9 = ? where id = ?',
-            $form->parse_amount( { numberformat => '1.000,00' }, $_->{c8} ),
-            $form->parse_amount( { numberformat => '1.000,00' }, $_->{c9} ),
+           update generic_import set c34 = ?, c35 = ? where id = ?',
+            $form->parse_amount( { numberformat => '1.000,00' }, $_->{c34} ),
+            $form->parse_amount( { numberformat => '1.000,00' }, $_->{c35} ),
             $_->{id} )
           or die( $form->{dbs}->error );
     }
 
-    @missing_accounts = $form->{dbs}->query('select distinct c3 from generic_import where c3 not in (select accno from chart) order by 1')->hashes;
+    @missing_accounts = $form->{dbs}->query('select distinct c29 from generic_import where c29 not in (select accno from chart) order by 1')->hashes;
 
     if (@missing_accounts){
         if ($form->{add_missing}){
             $form->info("Adding missing accounts ...\n");
             for (@missing_accounts){
-               $form->info("$_->{c3} is missing...");
-               $form->{dbs}->query('insert into chart (accno, description) values (?, ?)', $_->{c3}, 'New account' ); 
+               $form->info("$_->{c29} is missing...");
+               $form->{dbs}->query('insert into chart (accno, description) values (?, ?)', $_->{c29}, 'New account' ); 
                $form->info(" added.\n");
             }
             $form->{dbs}->commit;
         } else {
             $form->info($locale->text("Missing accounts ...\n"));
-            for (@missing_accounts){ $form->info("$_->{c3}\n") }
+            for (@missing_accounts){ $form->info("$_->{c29}\n") }
             $form->error($locale->text('Missing accounts found. Data not imported...'));
         }
     }
 
-    my @gl = $form->{dbs}->query('select distinct c1 from generic_import order by c1')->hashes or die( $form->{dbs}->error );
+    my @gl = $form->{dbs}->query('select distinct c27 from generic_import order by c27')->hashes or die( $form->{dbs}->error );
 
     $query = qq|SELECT curr FROM curr ORDER BY rn|;
     ( $form->{defaultcurrency} ) = $form->{dbh}->selectrow_array($query);
@@ -120,20 +120,20 @@ sub process_domus {
     my $diff;
     for $gl (@gl) {
         $i     = 1;
-        @trans = $form->{dbs}->query( 'select * from generic_import where c1 = ? order by c1', $gl->{c1} )->hashes or die( $form->{dbs}->error );
+        @trans = $form->{dbs}->query( 'select * from generic_import where c27 = ? order by c27', $gl->{c27} )->hashes or die( $form->{dbs}->error );
         $diff  = 0;
         for $trans (@trans) {
             $newform->{currency}    = $form->{currency};
             $newform->{department}  = $form->{department};
-            $newform->{reference}   = $trans->{c1};
-            $newform->{transdate}   = $trans->{c2};
-            $newform->{description} = $trans->{c10};
-            $newform->{"projectnumber_$i"} = $form->{dbs}->query( qq/select projectnumber || '--' || id from project where projectnumber = ?/, $trans->{c6} )->list;
-            $newform->{"source_$i"}        = $trans->{c7};
-            $newform->{"accno_$i"}         = $trans->{c3};
-            $newform->{"debit_$i"}         = $trans->{c8};
-            $newform->{"credit_$i"}        = $trans->{c9};
-            $diff += $trans->{c8} - $trans->{c9};
+            $newform->{reference}   = $trans->{c27};
+            $newform->{transdate}   = $trans->{c28};
+            $newform->{description} = $trans->{c36};
+            $newform->{"projectnumber_$i"} = $form->{dbs}->query( qq/select projectnumber || '--' || id from project where projectnumber = ?/, $trans->{c32} )->list;
+            $newform->{"source_$i"}        = $trans->{c33};
+            $newform->{"accno_$i"}         = $trans->{c29};
+            $newform->{"debit_$i"}         = $trans->{c34};
+            $newform->{"credit_$i"}        = $trans->{c35};
+            $diff += $trans->{c34} - $trans->{c35};
             $i++;
         }
         $newform->{rowcount} = $i;
